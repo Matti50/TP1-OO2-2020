@@ -50,6 +50,12 @@ Usuario >> cumploConNombre: unNombre contraseña: unaContraseña [
 ^ ((nombreDeUsuario = unNombre) and: [ contraseña = unaContraseña ]).
 ]
 
+{ #category : #accesing }
+Usuario >> fechaDeCreacion [
+
+^ fechaDeCreacion.
+]
+
 { #category : #initialization }
 Usuario >> inicializarConNombreDeUsuario: unNombre contraseña: unaContraseña [
 

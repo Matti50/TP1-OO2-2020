@@ -169,6 +169,12 @@ CuOOra >> obtenerPreguntasRelevantesDe: unUsuario [
 ]
 
 { #category : #public }
+CuOOra >> obtenerPreguntasRelevantesOrdenadasDe: unUsuario [
+
+^(self obtenerPreguntasRelevantesDe: unUsuario) asOrderedCollection sort: [ :a :b| a fechaDeCreacion <= b fechaDeCreacion]
+]
+
+{ #category : #public }
 CuOOra >> obtenerRespuestasDe: unUsuario [
 "obtiene las respuestas de un usuario dado"
 

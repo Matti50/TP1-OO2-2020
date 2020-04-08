@@ -12,7 +12,7 @@ Class {
 { #category : #'class initialization' }
 LoginComponent class >> initialize [
 
-WAAdmin register: self asApplicationAt: 'cuoora-iniSesion'.
+WAAdmin register: self asApplicationAt: 'cuoora'.
 ]
 
 { #category : #private }
@@ -26,7 +26,6 @@ user ifNotNil: [ self call: (HomeComponent user: user network: cuoora)  ].
 { #category : #initialization }
 LoginComponent >> initialize [
 super initialize.
-
 cuoora := CuOOra cargada.
 
 

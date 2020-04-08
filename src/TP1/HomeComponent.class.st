@@ -48,11 +48,12 @@ self renderQuestionsOn: aCanvas.
 { #category : #rendering }
 HomeComponent >> renderQuestionsOn: aCanvas [ 
 
-(network obtenerPreguntasRelevantesDe: user) do: [ :each |
+((network obtenerPreguntasRelevantesOrdenadasDe: user)takeFirst: 5) do: [ :each |
 	
 		aCanvas horizontalRule.
 		aCanvas heading level2; with: each titulo.
-		aCanvas paragraph: [   aCanvas text: 'Realizada por: ', each usuario nombreDeUsuario]
+		aCanvas paragraph: [   aCanvas text: 'Realizada por: ', each usuario nombreDeUsuario].
+		aCanvas anchor with: each likes size asString, ' Likes'. aCanvas space. aCanvas anchor with: each dislikes size asString, ' Dislikes'. 
 	 ]
 ]
 

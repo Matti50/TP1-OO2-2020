@@ -73,6 +73,12 @@ Post >> dislikes [
 ^ dislikes
 ]
 
+{ #category : #accessing }
+Post >> fechaDeCreacion [
+
+^ fechaDeCreacion.
+]
+
 { #category : #initialization }
 Post >> inicializarConUsuario: unUsuario [
 "metodo de inicializacion completo"
