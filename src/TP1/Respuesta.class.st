@@ -26,3 +26,9 @@ Respuesta >> soyDeUsuario: unUsuario [
 
 ^ usuario == unUsuario.
 ]
+
+{ #category : #accessing }
+Respuesta >> texto [
+
+^ texto.
+]

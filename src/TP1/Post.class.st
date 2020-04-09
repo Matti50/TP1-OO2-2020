@@ -94,3 +94,8 @@ dislikes:= Set new. "O un bag?"
 Post >> likes [
 ^ likes
 ]
+
+{ #category : #accessing }
+Post >> usuario [
+^ usuario.
+]

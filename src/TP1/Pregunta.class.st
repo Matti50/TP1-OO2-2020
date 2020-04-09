@@ -64,7 +64,7 @@ Pregunta >> titulo [
 ]
 
 { #category : #accessing }
-Pregunta >> usuario [
+Pregunta >> topicos [ 
 
-^ usuario.
+^ topicos.
 ]

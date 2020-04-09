@@ -36,6 +36,12 @@ super initialize.
 
 ]
 
+{ #category : #callbacks }
+HomeComponent >> question: aQuestion [
+
+self call: (QuestionComponent question: aQuestion).
+]
+
 { #category : #rendering }
 HomeComponent >> renderContentOn: aCanvas [
 
@@ -51,9 +57,9 @@ HomeComponent >> renderQuestionsOn: aCanvas [
 ((network obtenerPreguntasRelevantesOrdenadasDe: user)takeFirst: 5) do: [ :each |
 	
 		aCanvas horizontalRule.
-		aCanvas heading level2; with: each titulo.
-		aCanvas paragraph: [   aCanvas text: 'Realizada por: ', each usuario nombreDeUsuario].
-		aCanvas anchor with: each likes size asString, ' Likes'. aCanvas space. aCanvas anchor with: each dislikes size asString, ' Dislikes'. 
+		aCanvas anchor callback: [self question: each]; with:[aCanvas heading level2; with: each titulo ].
+		aCanvas paragraph: [   aCanvas text: 'Realizada por: ', each usuario nombreDeUsuario. aCanvas space. aCanvas text:'| ', each respuestas size asString, ' Respuestas']. 
+		aCanvas anchor with: each likes size asString, ' Likes | '. aCanvas space. aCanvas anchor with: each dislikes size asString, ' Dislikes'. 
 	 ]
 ]
 

@@ -15,12 +15,12 @@ LoginComponent class >> initialize [
 WAAdmin register: self asApplicationAt: 'cuoora'.
 ]
 
-{ #category : #private }
+{ #category : #callback }
 LoginComponent >> chequearUsuarioYLoggear [
 |user|
 user := cuoora chequearExistenciaDeUsuarioConNombre: (self userName) contraseña: (self userPass).
 user ifNotNil: [ self call: (HomeComponent user: user network: cuoora)  ].
-
+userPass := nil. userName := nil.
 ]
 
 { #category : #initialization }
@@ -42,13 +42,10 @@ aCanvas form: [
 		aCanvas paragraph: [ aCanvas label with: 'Contraseña:'. aCanvas space.
 			aCanvas textInput on: #userPass of: self].
 		
-		aCanvas button callback:[self chequearUsuarioYLoggear ]; with: 'Ir al home' .
+		aCanvas button callback:[self chequearUsuarioYLoggear ]; with: 'Iniciar Sesion' .
 ].
 
-aCanvas unorderedList: [ 
-		cuoora usuarios do: [ :each | aCanvas listItem with: each nombreDeUsuario , ' ', each contraseña ] 
-	
-	 ].
+
 
 "aCanvas anchor:[ aCanvas button callback: [ self halt. ]; with: 'Hola botton']."
 "Es raro como los botones no hacen la accion por defecto si no estan en un form"

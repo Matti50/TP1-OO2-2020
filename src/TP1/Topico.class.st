@@ -19,3 +19,8 @@ Topico >> inicializarConNombre: unNombre descripcion: unaDescripcion [
 nombre:= unNombre.
 descripcion:= unaDescripcion.
 ]
+
+{ #category : #accessing }
+Topico >> nombre [
+^ nombre.
+]
