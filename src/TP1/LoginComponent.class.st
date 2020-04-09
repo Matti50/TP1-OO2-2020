@@ -2,7 +2,6 @@ Class {
 	#name : #LoginComponent,
 	#superclass : #WAComponent,
 	#instVars : [
-		'cuoora',
 		'userName',
 		'userPass'
 	],
@@ -12,23 +11,19 @@ Class {
 { #category : #'class initialization' }
 LoginComponent class >> initialize [
 
-WAAdmin register: self asApplicationAt: 'cuoora'.
+(WAAdmin register: self asApplicationAt: 'cuoora') sessionClass: CuooraSession.
 ]
 
 { #category : #callback }
 LoginComponent >> chequearUsuarioYLoggear [
-|user|
-user := cuoora chequearExistenciaDeUsuarioConNombre: (self userName) contraseña: (self userPass).
-user ifNotNil: [ self call: (HomeComponent user: user network: cuoora)  ].
-userPass := nil. userName := nil.
-]
 
-{ #category : #initialization }
-LoginComponent >> initialize [
-super initialize.
-cuoora := CuOOra cargada.
-
-
+((CuOOra soleInstance) chequearExistenciaDeUsuarioConNombre: (self userName) contraseña: (self userPass))
+ifNotNil: [ :user| 
+		self session user: user.
+		self call: HomeComponent new. 
+	].
+userName := nil.
+userPass:= nil.
 ]
 
 { #category : #rendering }

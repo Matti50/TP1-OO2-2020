@@ -9,17 +9,16 @@ CuooraSampleLoader >> loadSampleDataIn: aCuoora [
 
 |pedro diego juan topic1 topic2 topic3 preguntaDePedro preguntaDeDiego|
 
-topic1 := Topico newConNombre: 'OO1' descripcion: 'Dedicado a la materia de orientacion a objetos 1'.
-topic2 := Topico newConNombre: 'Test de Unidad' descripcion: 'Para comprender como hacer mejores test'.
-topic3 := Topico newConNombre: 'Smalltalk' descripcion: 'Dedicado al mejor lenguaje orientado a objetos'.
+topic1 := aCuoora agregarTopicoConNombre: 'OO1' descripcion: 'Dedicado a la materia de orientacion a objetos 1'.
+topic2 := aCuoora agregarTopicoConNombre: 'Test de Unidad' descripcion: 'Para comprender como hacer mejores test'.
+topic3 := aCuoora agregarTopicoConNombre: 'Smalltalk' descripcion: 'Dedicado al mejor lenguaje orientado a objetos'.
 
 
 pedro :=  aCuoora agregarUsuarioConNombre: 'pedro@cuoora.com' contraseña: 'pedro@cuoora.com'.
 diego := aCuoora agregarUsuarioConNombre: 'diego@cuoora.com' contraseña: 'diego@cuoora.com'.
 juan := aCuoora agregarUsuarioConNombre: 'juan@cuoora.com' contraseña: 'juan@cuoora.com'.
 
-juan seguirA: diego.
-pedro seguirA: juan.
+
 
 preguntaDePedro :=  pedro agregarPreguntaConTitulo: '¿Para que sirve el metodo setUp?' descripcion: 'Me gustaria saber mas del tema' topicos: (Set new add: topic1; add: topic2;yourself).
 
@@ -31,8 +30,13 @@ preguntaDeDiego := diego agregarPreguntaConTitulo: '¿Que significa #messageNotU
 
 preguntaDeDiego agregarRespuestaConUsuario: pedro texto: ' Significa que el objeto que recibió el
 mensaje no encontró ningún método para ejecutar en
-respuesta.'
+respuesta.'.
 
+juan seguirA: diego.
+pedro seguirA: juan.
+
+
+^ aCuoora.
 
 
 

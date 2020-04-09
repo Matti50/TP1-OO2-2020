@@ -1,10 +1,6 @@
 Class {
 	#name : #HomeComponent,
 	#superclass : #WAComponent,
-	#instVars : [
-		'user',
-		'network'
-	],
 	#category : #'TP1-ui'
 }
 
@@ -12,20 +8,6 @@ Class {
 HomeComponent class >> initialize [ 
 
 
-
-]
-
-{ #category : #accessing }
-HomeComponent class >> user: unUsuario network: aNetWork [
-
-^ self new inicializarConUsuario: unUsuario network: aNetWork.
-]
-
-{ #category : #initialization }
-HomeComponent >> inicializarConUsuario: unUsuario network: aNetwork [.
-
-user := unUsuario.
-network := aNetwork.
 
 ]
 
@@ -54,7 +36,7 @@ self renderQuestionsOn: aCanvas.
 { #category : #rendering }
 HomeComponent >> renderQuestionsOn: aCanvas [ 
 
-((network obtenerPreguntasRelevantesOrdenadasDe: user)takeFirst: 5) do: [ :each |
+((CuOOra soleInstance obtenerPreguntasRelevantesOrdenadasDe: (self session user))takeFirst: 5) do: [ :each |
 	
 		aCanvas horizontalRule.
 		aCanvas anchor callback: [self question: each]; with:[aCanvas heading level2; with: each titulo ].
@@ -67,7 +49,7 @@ HomeComponent >> renderQuestionsOn: aCanvas [
 HomeComponent >> renderUserInfoOn: aCanvas [
 
 
-aCanvas heading level2 with: user nombreDeUsuario.
+aCanvas heading level2 with: (self session user) nombreDeUsuario.
 aCanvas form: [ aCanvas button callback:[ self answer. ]; with: 'Log out'.   ]
 
 ]

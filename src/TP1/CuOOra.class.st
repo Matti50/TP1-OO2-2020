@@ -12,16 +12,16 @@ Class {
 }
 
 { #category : #'instance creation' }
-CuOOra class >> cargada [
-
-soleInstance ifNil: [ soleInstance := self new cargada ].
-^ soleInstance.
-]
-
-{ #category : #'instance creation' }
 CuOOra class >> clearSoleInstance [
 
 soleInstance := nil.
+]
+
+{ #category : #'instance creation' }
+CuOOra class >> soleInstance [
+
+soleInstance ifNil: [ soleInstance := ((CuooraSampleLoader new) loadSampleDataIn: (self new)) ].
+^ soleInstance.
 ]
 
 { #category : #public }
