@@ -1,6 +1,9 @@
 Class {
 	#name : #HomeComponent,
 	#superclass : #WAComponent,
+	#instVars : [
+		'header'
+	],
 	#category : #'TP1-ui'
 }
 
@@ -11,11 +14,17 @@ HomeComponent class >> initialize [
 
 ]
 
+{ #category : #hooks }
+HomeComponent >> children [
+
+^ Array with: header.
+]
+
 { #category : #initialization }
 HomeComponent >> initialize [ 
 
 super initialize.
-
+header := HeaderComponent withParent: self.
 ]
 
 { #category : #callbacks }
@@ -27,8 +36,7 @@ self call: (QuestionComponent question: aQuestion).
 { #category : #rendering }
 HomeComponent >> renderContentOn: aCanvas [
 
-aCanvas heading: 'CuOOra'.
-self renderUserInfoOn: aCanvas.
+aCanvas render: header.
 self renderQuestionsOn: aCanvas.
 
 ]
@@ -43,13 +51,4 @@ HomeComponent >> renderQuestionsOn: aCanvas [
 		aCanvas paragraph: [   aCanvas text: 'Realizada por: ', each usuario nombreDeUsuario. aCanvas space. aCanvas text:'| ', each respuestas size asString, ' Respuestas']. 
 		aCanvas anchor with: each likes size asString, ' Likes | '. aCanvas space. aCanvas anchor with: each dislikes size asString, ' Dislikes'. 
 	 ]
-]
-
-{ #category : #rendering }
-HomeComponent >> renderUserInfoOn: aCanvas [
-
-
-aCanvas heading level2 with: (self session user) nombreDeUsuario.
-aCanvas form: [ aCanvas button callback:[ self answer. ]; with: 'Log out'.   ]
-
 ]

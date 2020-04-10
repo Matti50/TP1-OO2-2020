@@ -3,7 +3,8 @@ Class {
 	#superclass : #WAComponent,
 	#instVars : [
 		'userName',
-		'userPass'
+		'userPass',
+		'header'
 	],
 	#category : #'TP1-ui'
 }
@@ -26,10 +27,23 @@ userName := nil.
 userPass:= nil.
 ]
 
+{ #category : #hooks }
+LoginComponent >> children [ 
+
+^ Array with: header.
+]
+
+{ #category : #initialization }
+LoginComponent >> initialize [ 
+super initialize.
+
+header := HeaderComponent new.
+]
+
 { #category : #rendering }
 LoginComponent >> renderContentOn: aCanvas [
 
-aCanvas heading with: 'CuOOra'.
+aCanvas render: header.
 aCanvas form: [ 
 		aCanvas paragraph:[aCanvas label with: 'Nombre de Usuario:'. aCanvas space.
 			aCanvas textInput on: #userName of: self.
@@ -37,7 +51,7 @@ aCanvas form: [
 		aCanvas paragraph: [ aCanvas label with: 'Contraseña:'. aCanvas space.
 			aCanvas textInput on: #userPass of: self].
 		
-		aCanvas button callback:[self chequearUsuarioYLoggear ]; with: 'Iniciar Sesion' .
+		aCanvas button callback:[self chequearUsuarioYLoggear. self session user: nil ]; with: 'Iniciar Sesion' .
 ].
 
 
