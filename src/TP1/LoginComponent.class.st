@@ -1,10 +1,9 @@
 Class {
 	#name : #LoginComponent,
-	#superclass : #WAComponent,
+	#superclass : #HeaderComponent,
 	#instVars : [
 		'userName',
-		'userPass',
-		'header'
+		'userPass'
 	],
 	#category : #'TP1-ui'
 }
@@ -18,7 +17,7 @@ LoginComponent class >> initialize [
 { #category : #callback }
 LoginComponent >> chequearUsuarioYLoggear [
 
-((CuOOra soleInstance) chequearExistenciaDeUsuarioConNombre: (self userName) contraseña: (self userPass))
+(self model chequearExistenciaDeUsuarioConNombre: (self userName) contraseña: (self userPass))
 ifNotNil: [ :user| 
 		self session user: user.
 		self call: HomeComponent new. 
@@ -27,23 +26,17 @@ userName := nil.
 userPass:= nil.
 ]
 
-{ #category : #hooks }
-LoginComponent >> children [ 
-
-^ Array with: header.
-]
-
 { #category : #initialization }
 LoginComponent >> initialize [ 
 super initialize.
 
-header := HeaderComponent new.
+
 ]
 
 { #category : #rendering }
 LoginComponent >> renderContentOn: aCanvas [
 
-aCanvas render: header.
+super renderContentOn: aCanvas.
 aCanvas form: [ 
 		aCanvas paragraph:[aCanvas label with: 'Nombre de Usuario:'. aCanvas space.
 			aCanvas textInput on: #userName of: self.

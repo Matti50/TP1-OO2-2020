@@ -35,6 +35,18 @@ Post >> agregarLikeDe: unUsuario [
 	
 ]
 
+{ #category : #public }
+Post >> cantidadDeDislikes [
+
+^ dislikes size.
+]
+
+{ #category : #public }
+Post >> cantidadDeLikes [
+
+^ likes size.
+]
+
 { #category : #private }
 Post >> chequearDislikeYAgregarDe: unUsuario [
 
