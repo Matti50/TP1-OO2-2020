@@ -4,30 +4,14 @@ Class {
 	#category : #'TP1-ui'
 }
 
-{ #category : #services }
-QuestionComponent class >> question: aQuestion [
-
-^ self new question: aQuestion.
-]
-
-{ #category : #accessing }
-QuestionComponent >> question: aQuestion [
-
-post := aQuestion.
-]
-
 { #category : #rendering }
 QuestionComponent >> renderContentOn: aCanvas [
 
-
-aCanvas heading level2 with: post titulo.
+aCanvas anchor callback: [self session presenter call: (QuestionAndAnswersComponent withQuestion: post). self answer	]; with:[aCanvas heading level2 with: post titulo]	.
 self renderQuestionTopicsOn: aCanvas.
+aCanvas paragraph: [ aCanvas text: 'Realizada por: ', post usuario nombreDeUsuario ].
 self renderStatusOn: aCanvas.
-"question respuestas do: [ :each |
-		aCanvas heading level2;with: each usuario nombreDeUsuario.
-		aCanvas paragraph: each texto.
-		aCanvas paragraph: each likes size asString, ' Likes | ' , each dislikes size asString, ' Dislikes'.
-	 ]"
+
 ]
 
 { #category : #rendering }

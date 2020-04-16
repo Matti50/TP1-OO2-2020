@@ -1,6 +1,6 @@
 Class {
 	#name : #PostComponent,
-	#superclass : #HeaderComponent,
+	#superclass : #WAComponent,
 	#instVars : [
 		'post'
 	],
@@ -34,7 +34,9 @@ post := aPost.
 { #category : #rendering }
 PostComponent >> renderStatusOn: aCanvas [.
 
-aCanvas anchor callback: [ self addLike ]; with: post cantidadDeDislikes asString, ' Likes'.
-aCanvas space. aCanvas space.
-aCanvas anchor callback: [ self addDislike ]; with: post cantidadDeDislikes asString, ' Dislikes'.
+
+aCanvas paragraph: [ aCanvas text: post cantidadDeLikes asString, ' Likes |'. aCanvas text: ' ', post cantidadDeDislikes asString, ' Dislikes'.].
+aCanvas anchor callback: [ post agregarLikeDe: (self session user) ]; with: 'Like'.
+aCanvas space.
+aCanvas anchor callback: [ post agregarDislikeDe: (self session user) ]; with: 'Dislike'.
 ]

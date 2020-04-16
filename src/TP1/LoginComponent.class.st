@@ -34,9 +34,9 @@ super initialize.
 ]
 
 { #category : #rendering }
-LoginComponent >> renderContentOn: aCanvas [
+LoginComponent >> renderBodyOn: aCanvas [
 
-super renderContentOn: aCanvas.
+
 aCanvas form: [ 
 		aCanvas paragraph:[aCanvas label with: 'Nombre de Usuario:'. aCanvas space.
 			aCanvas textInput on: #userName of: self.

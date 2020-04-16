@@ -14,7 +14,7 @@ HomeComponent class >> initialize [
 { #category : #hooks }
 HomeComponent >> children [ 
 
-^ (self model obtenerPreguntasRelevantesOrdenadasDe: (self session user)) collect: [:each | QuestionComponent question: each. ]
+^ (self model obtenerPreguntasRelevantesOrdenadasDe: (self session user)) collect: [:each | QuestionComponent post: each. ]
 
 ]
 
@@ -32,9 +32,11 @@ self call: (QuestionComponent question: aQuestion).
 ]
 
 { #category : #rendering }
-HomeComponent >> renderContentOn: aCanvas [
+HomeComponent >> renderBodyOn: aCanvas [
 
-super renderContentOn: aCanvas.
+
+aCanvas button with: 'Hacer una nueva pregunta'.
+aCanvas heading: 'Ultimas Preguntas'.
 self renderQuestionsOn: aCanvas.
 
 ]
@@ -42,5 +44,5 @@ self renderQuestionsOn: aCanvas.
 { #category : #rendering }
 HomeComponent >> renderQuestionsOn: aCanvas [ 
 
-self children do: [:each | aCanvas render: each ].
+self children do: [:each | aCanvas render: each. aCanvas horizontalRule ].
 ]
