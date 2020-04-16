@@ -25,6 +25,12 @@ PostComponent >> addLike [
 post agregarLikeDe: (self session user).
 ]
 
+{ #category : #callbacks }
+PostComponent >> openUserPage [
+
+self call: [  ].
+]
+
 { #category : #accessing }
 PostComponent >> post: aPost [
 
@@ -32,11 +38,17 @@ post := aPost.
 ]
 
 { #category : #rendering }
-PostComponent >> renderStatusOn: aCanvas [.
+PostComponent >> renderContentOn: aCanvas [.
 
-
+self renderMainContentOn: aCanvas.
 aCanvas paragraph: [ aCanvas text: post cantidadDeLikes asString, ' Likes |'. aCanvas text: ' ', post cantidadDeDislikes asString, ' Dislikes'.].
 aCanvas anchor callback: [ post agregarLikeDe: (self session user) ]; with: 'Like'.
 aCanvas space.
 aCanvas anchor callback: [ post agregarDislikeDe: (self session user) ]; with: 'Dislike'.
+]
+
+{ #category : #rendering }
+PostComponent >> renderMainContentOn: aCanvas [
+
+^ self subclassResponsibility.
 ]

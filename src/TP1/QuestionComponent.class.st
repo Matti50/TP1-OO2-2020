@@ -5,12 +5,11 @@ Class {
 }
 
 { #category : #rendering }
-QuestionComponent >> renderContentOn: aCanvas [
+QuestionComponent >> renderMainContentOn: aCanvas [
 
 aCanvas anchor callback: [self session presenter call: (QuestionAndAnswersComponent withQuestion: post). self answer	]; with:[aCanvas heading level2 with: post titulo]	.
 self renderQuestionTopicsOn: aCanvas.
-aCanvas paragraph: [ aCanvas text: 'Realizada por: ', post usuario nombreDeUsuario ].
-self renderStatusOn: aCanvas.
+aCanvas paragraph: 'Realizada por: '. aCanvas anchor callback: [  ]; with: post usuario nombreDeUsuario.
 
 ]
 

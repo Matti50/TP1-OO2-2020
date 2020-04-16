@@ -19,7 +19,7 @@ HeaderComponent >> renderBodyOn: aCanvas [
 HeaderComponent >> renderContentOn: aCanvas [
 aCanvas heading: 'Cuoora'.
 (self session user) ifNotNil: [ 
-	aCanvas heading level2 with: (self session user) nombreDeUsuario.
+	aCanvas anchor callback:[]; with:[aCanvas heading level2 with: (self session user) nombreDeUsuario].
 	aCanvas form: [ aCanvas button callback:[self answer.]; with: 'Log out'.]
  ].
 

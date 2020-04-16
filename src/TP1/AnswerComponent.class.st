@@ -5,9 +5,8 @@ Class {
 }
 
 { #category : #rendering }
-AnswerComponent >> renderContentOn: aCanvas [
+AnswerComponent >> renderMainContentOn:  aCanvas [
 
-aCanvas heading level: 3; with: 'Respuesta realizada por: ', post usuario nombreDeUsuario.
+aCanvas anchor callback:[]; with: [aCanvas heading level: 3; with: 'Respuesta de: ', post usuario nombreDeUsuario].
 aCanvas paragraph with: post texto.
-self renderStatusOn: aCanvas.
 ]
