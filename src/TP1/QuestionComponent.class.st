@@ -9,8 +9,7 @@ QuestionComponent >> renderMainContentOn: aCanvas [
 
 aCanvas anchor callback: [self session presenter call: (QuestionAndAnswersComponent withQuestion: post). self answer	]; with:[aCanvas heading level2 with: post titulo]	.
 self renderQuestionTopicsOn: aCanvas.
-aCanvas paragraph: 'Realizada por: '. aCanvas anchor callback: [  ]; with: post usuario nombreDeUsuario.
-
+aCanvas paragraph:[aCanvas text: 'Realizada por: '. aCanvas anchor callback: [ self openUserPage ]; with: post usuario nombreDeUsuario.]
 ]
 
 { #category : #rendering }

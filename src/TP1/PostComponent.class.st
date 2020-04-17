@@ -28,7 +28,7 @@ post agregarLikeDe: (self session user).
 { #category : #callbacks }
 PostComponent >> openUserPage [
 
-self call: [  ].
+self session presenter call: (UserPageComponent withUser: post usuario).
 ]
 
 { #category : #accessing }

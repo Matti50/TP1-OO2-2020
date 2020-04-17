@@ -114,6 +114,12 @@ seguidos add: unUsuario.
 ]
 
 { #category : #public }
+Usuario >> sigoA: unUsuario [
+
+^ (self seguidos anySatisfy: [:user | user = unUsuario]).
+]
+
+{ #category : #public }
 Usuario >> tengoPregunta: unaPregunta [
 "Reviso si tengo unaPregunta en mi coleccion de preguntas"
 
