@@ -22,7 +22,7 @@ AnswerDialog >> renderLowBarOn: aCanvas [
 
 aCanvas form: [  
 aCanvas heading level: 2; with: 'RESPONDER'.
-aCanvas textArea placeholder: 'escriba aqui su respuesta'; on: #answerText of: self; style:'resize:none'.
+aCanvas textArea placeholder: 'escriba aqui su respuesta'; on: #answerText of: self; style:'resize:none;';columns: 50; rows: 7.
 
 aCanvas break.
 aCanvas button callback: [ self answer. ]; with: 'Cancelar'.
@@ -31,7 +31,7 @@ aCanvas button callback: [ self validateAndAnswer. self answer ]; with: 'Aceptar
 ].
 ]
 
-{ #category : #public }
+{ #category : #callback }
 AnswerDialog >> validateAndAnswer [
 self answerText ifNotEmpty:  [ 
 		question agregarRespuestaConUsuario: (self session user) texto: self answerText.	

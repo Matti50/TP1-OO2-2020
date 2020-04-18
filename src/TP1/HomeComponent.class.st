@@ -34,8 +34,8 @@ self call: (QuestionComponent question: aQuestion).
 { #category : #rendering }
 HomeComponent >> renderBodyOn: aCanvas [
 
-
-aCanvas button with: 'Hacer una nueva pregunta'.
+aCanvas break.
+aCanvas anchor callback: [ self call: (NewQuestionDialog new). ]; with: [   aCanvas button with: 'Hacer una nueva pregunta'].
 aCanvas heading: 'Ultimas Preguntas'.
 self renderQuestionsOn: aCanvas.
 
