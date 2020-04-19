@@ -36,7 +36,7 @@ UserPageComponent >> renderFollowButtonOn: aCanvas [
 ifFalse: [ 
 	(self session user sigoA: user)
 	ifFalse: [ 
-			aCanvas anchor callback: [  ]; with: 'Follow'.
+			aCanvas anchor callback: [ self session user seguirA: user. ]; with: 'Follow'.
 		 ]
 	
 	 ]

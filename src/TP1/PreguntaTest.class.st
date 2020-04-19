@@ -23,11 +23,13 @@ user := Usuario newConNombreDeUsuario: 'mati' contraseña: '123'.
 { #category : #tests }
 PreguntaTest >> testAgregarRespuestaConUsuarioTexto [
 
+|response|
 self assert: pregunta respuestas isEmpty.
 
-pregunta agregarRespuestaConUsuario: (Usuario newConNombreDeUsuario: 'mati' contraseña: '123') texto: 'esta es la respuesta'.
+response :=  pregunta agregarRespuestaConUsuario: (Usuario newConNombreDeUsuario: 'mati' contraseña: '123') texto: 'esta es la respuesta'.
 
 self assert: pregunta respuestas size equals: 1.
+self assert: (pregunta respuestas contains: [:each | each = response]).
 ]
 
 { #category : #tests }

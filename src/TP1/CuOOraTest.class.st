@@ -5,7 +5,9 @@ Class {
 		'cuoora',
 		'topicos',
 		'usuario',
-		'usuario2'
+		'usuario2',
+		'topic',
+		'topic3'
 	],
 	#category : #'TP1-tests'
 }
@@ -15,8 +17,10 @@ CuOOraTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 cuoora := CuOOra new.
 topicos := Set new. 
+topic := Topico newConNombre: 'POO' descripcion:'Descripcion de lo que es la POO'.
+topic3 := Topico newConNombre: 'P funcional' descripcion: 'Para aquellas preguntas sobre p funcional'.
 usuario := Usuario newConNombreDeUsuario: 'mati' contraseña: '123'.
-topicos add: (Topico newConNombre: 'POO' descripcion:'Descripcion de lo que es la POO'). 
+topicos add: topic. 
 usuario2 := Usuario newConNombreDeUsuario: 'tina' contraseña: '456'.
 ]
 
@@ -27,114 +31,83 @@ CuOOraTest >> testAgregarTopicoConNombreDescripcion [
 
 self assert: cuoora topicos isEmpty.
 topico := cuoora agregarTopicoConNombre: 'Tecnologia' descripcion: 'Aqui van las preguntas de tecnologia'.
-self assert: cuoora topicos size equals: 1.
+self assert: (cuoora topicos anySatisfy: [:each | each = topico]).
 cuoora borrarTopico: topico.
-self assert: cuoora topicos isEmpty.
+self deny: (cuoora topicos anySatisfy: [:each | each = topico]).
 
 ]
 
 { #category : #tests }
+CuOOraTest >> testAgregarTopicos [
+
+cuoora agregarTopicos: topicos.
+self assert: (cuoora topicos contains: [:each | each = topic]).
+self deny: (cuoora topicos contains: [:each | each = (Topico newConNombre: 'el nuevo topico' descripcion: 'el nuevo topico es este')])
+]
+
+{ #category : #tests }
 CuOOraTest >> testAgregarUsuarioConNombreContraseña [
-|usuario|
 
 self assert: (cuoora usuarios isEmpty).
-usuario :=  cuoora agregarUsuarioConNombre: 'mati' contraseña: '123'.
-self assert: cuoora usuarios size equals: 1.
+cuoora agregarUsuario: usuario. 
+self assert: (cuoora usuarios anySatisfy: [:each | each = usuario]).
 cuoora borrarUsuario: usuario.
+self deny: (cuoora usuarios anySatisfy: [:each | each = usuario]).
 self assert: cuoora usuarios isEmpty.
 
 ]
 
 { #category : #tests }
-CuOOraTest >> testBorrarPregunta [
-
-|usuario pregunta|
-usuario := cuoora agregarUsuarioConNombre: 'mati' contraseña: '123'.
-self assert: usuario preguntas size equals: 0.
-
-pregunta :=  usuario agregarPreguntaConTitulo: '¿Que es la POO?' descripcion: 'Hola, me gustaria saber mas del tema' topicos: topicos.
-self assert: usuario preguntas size equals: 1.
-
-cuoora borrarPregunta: pregunta.
-self assert: usuario preguntas size equals: 0. 
-]
-
-{ #category : #tests }
 CuOOraTest >> testCalcularPuntajeDe [
 
-|user user2 puntaje pregunta|
+|puntaje pregunta|
 
-user := cuoora agregarUsuarioConNombre: 'mati' contraseña: '123'.
-user2 := cuoora agregarUsuarioConNombre: 'agus' contraseña: '456'.
+cuoora agregarUsuario: usuario.
+cuoora agregarUsuario: usuario2.
 
 
-puntaje := cuoora calcularPuntajeDe: user.
+puntaje := cuoora calcularPuntajeDe: usuario.
 self assert: puntaje equals: 0.
 
-pregunta := user agregarPreguntaConTitulo: 'es un test' descripcion: 'solo un test' topicos: nil. 
-puntaje := cuoora calcularPuntajeDe: user.
+pregunta := usuario agregarPreguntaConTitulo: 'es un test' descripcion: 'solo un test' topicos: nil. 
+puntaje := cuoora calcularPuntajeDe: usuario.
 self assert: puntaje equals: 20.
-pregunta agregarRespuestaConUsuario: user texto: 'Es una respuesta'.
-puntaje := cuoora calcularPuntajeDe: user.
+pregunta agregarRespuestaConUsuario: usuario texto: 'Es una respuesta'.
+puntaje := cuoora calcularPuntajeDe: usuario.
 self assert: puntaje equals: 70.
 
-pregunta agregarLikeDe: user2.
-puntaje := cuoora calcularPuntajeDe: user.
+pregunta agregarLikeDe: usuario2.
+puntaje := cuoora calcularPuntajeDe: usuario.
 self assert: puntaje equals: 71.
 
-pregunta:= user2 agregarPreguntaConTitulo: 'mati' descripcion: 'un test de preguntas' topicos: nil.
-pregunta agregarRespuestaConUsuario: user texto: 'es una respuesta de prueba'.
-puntaje := cuoora calcularPuntajeDe: user.
+pregunta:= usuario2 agregarPreguntaConTitulo: 'mati' descripcion: 'un test de preguntas' topicos: nil.
+pregunta agregarRespuestaConUsuario: usuario texto: 'es una respuesta de prueba'.
+puntaje := cuoora calcularPuntajeDe: usuario.
 self assert: puntaje equals: 121.
 
 
 ]
 
 { #category : #tests }
-CuOOraTest >> testObtenerPreguntasDe [
-|preguntas|
-preguntas:= cuoora obtenerPreguntasDe: usuario.
-self assert: preguntas size equals: 0.
+CuOOraTest >> testChequearExistenciaDeUsuarioConNombreContraseña [
 
-usuario agregarPreguntaConTitulo: 'sd' descripcion: 'sd' topicos: nil.
-preguntas := cuoora obtenerPreguntasDe: usuario.
-self assert: preguntas size equals: 1. 
+cuoora agregarUsuario: usuario.
+self assert: ((cuoora chequearExistenciaDeUsuarioConNombre: 'mati' contraseña: '123') isNotNil).
+self assert: ((cuoora chequearExistenciaDeUsuarioConNombre: 'tina' contraseña: '456' )isNil).
 ]
 
 { #category : #tests }
 CuOOraTest >> testObtenerPreguntasDeTopico [
-
-|usuario3 preguntas topicos2 topico1 topico2 pregunta|
-
-topicos2 := OrderedCollection new.
-
-topico1:= topicos2 add: (Topico newConNombre: 'POO' descripcion: 'Poo').
-topico2 := topicos2 add: (Topico newConNombre: 'P. Estructurada' descripcion: 'estructurada').
-
-usuario3 := cuoora agregarUsuarioConNombre: 'mati' contraseña: '23'.
-
-usuario3 agregarPreguntaConTitulo: 'Nueva pregunta' descripcion: 'es una nueva pregunta' topicos: topicos2.
-
-preguntas := cuoora obtenerPreguntasDeTopico: topico1.
-self assert: preguntas size equals: 1.
-preguntas := cuoora obtenerPreguntasDeTopico: topico2.
-self assert: preguntas size equals: 1.
-
-pregunta :=  usuario3 agregarPreguntaConTitulo: 'Nueva pregunta 2' descripcion: 'es otra pregunta' topicos: topicos2.
-preguntas := cuoora obtenerPreguntasDeTopico: topico1.
-self assert: preguntas size equals: 2.
-preguntas := cuoora obtenerPreguntasDeTopico: topico2. 
-self assert: preguntas size equals: 2.
-
-cuoora borrarPregunta: pregunta.
-preguntas := cuoora obtenerPreguntasDeTopico: topico1.
-self assert: preguntas size equals: 1.
+|pregunta |
+pregunta :=  usuario agregarPreguntaConTitulo: '¿Que es xUnit?' descripcion: 'Me gustaria saber mas del tema' topicos: topicos.
+self assert: (usuario preguntas anySatisfy: [:each | each topicos contains: [:a | a = topic]]).
+self deny: (usuario preguntas anySatisfy: [:each | each topicos contains: [:a | a = (topic3)]])
 ]
 
 { #category : #tests }
 CuOOraTest >> testObtenerPreguntasRelevantesDe [
 
-|user1 user2 user3 user4 topics topic1 topic2 preguntas topics2|
+|user1 user2 user3 user4 topics topic1 topic2 preguntas topics2 preg preg2|
 
 topics2 := Set new.
 topics := Set new.
@@ -151,9 +124,9 @@ user4 := cuoora agregarUsuarioConNombre: 'Augusto Cesar' contraseña: 'Roma'.
 user1 agregarPreguntaConTitulo: 'test' descripcion: 'test' topicos: topics.
 user3 agregarPreguntaConTitulo: 'sd' descripcion: 'sdsd' topicos: topics.
 user1 agregarPreguntaConTitulo: 'sd' descripcion: 'hola a todos' topicos: topics2.
-user2 agregarPreguntaConTitulo: 'sd' descripcion: 'es mi propia pregunta' topicos: topics.
+preg := user2 agregarPreguntaConTitulo: 'sd' descripcion: 'es mi propia pregunta' topicos: topics.
 user3 agregarPreguntaConTitulo: 'Esta no pasa' descripcion: 'Esta no debe pasar' topicos: topics2.
-user4 agregarPreguntaConTitulo: 'Esta pasa ' descripcion: 'Esa si que pasa' topicos: topics2.
+preg2 :=  user4 agregarPreguntaConTitulo: 'Esta pasa ' descripcion: 'Esa si que pasa' topicos: topics2.
 
 user2 seguirA: user1.
 user2 seguirA: user4.
@@ -162,12 +135,15 @@ user2 agregarTopicoDeInteres: topic1.
 preguntas:= cuoora obtenerPreguntasRelevantesDe: user2.
 
 self assert: preguntas size equals: 5.
+self assert: (preguntas contains: [:each | each = preg]).
 
 user4 agregarTopicoDeInteres: topic2.
 user4 seguirA: user1.
 user4 seguirA: user3.
 preguntas:= cuoora obtenerPreguntasRelevantesDe: user4.
 self assert: preguntas size equals: 5.
+self assert: (preguntas contains: [:each | each = preg2]).
+self deny: (preguntas contains:[:each | each = preg]).
 
 
 
@@ -176,7 +152,7 @@ self assert: preguntas size equals: 5.
 { #category : #tests }
 CuOOraTest >> testObtenerRespuestasDe [
 
-|user question respuestas|
+|user question respuestas response|
 
 user:= cuoora agregarUsuarioConNombre: 'mati' contraseña: '1234'.
 
@@ -186,45 +162,10 @@ self assert: question respuestas isEmpty.
 respuestas := cuoora obtenerRespuestasDe: user.
 self assert: respuestas size equals: 0.
 
-question agregarRespuestaConUsuario: user texto: 'Es un paradigma de programacion'.
+response :=  question agregarRespuestaConUsuario: user texto: 'Es un paradigma de programacion'.
 self assert: question respuestas size equals: 1.
-
+self assert: (question respuestas contains: [:each | each = response]).
 respuestas := cuoora obtenerRespuestasDe: user.
 self assert: respuestas size equals: 1.
-
-]
-
-{ #category : #tests }
-CuOOraTest >> testObtenerRespuestasOrdenadasDe [
-
-|pregunta respuestas respuesta1 respuesta2|
-
-pregunta := usuario agregarPreguntaConTitulo: 'POO' descripcion: 'Paradigma' topicos: topicos.
-
-respuesta1 := pregunta agregarRespuestaConUsuario: usuario texto: 'Si, es un paradigma'.
-respuesta2 := pregunta agregarRespuestaConUsuario: usuario texto: 'Es distinto que estructurada'.
-self assert: pregunta respuestas size equals: 2.
-
-respuesta1 agregarLikeDe: usuario.
-respuesta2 agregarLikeDe: usuario.
-respuesta2 agregarLikeDe: usuario2.
-
-self assert: respuesta2 likes size equals: 2.
-self assert: respuesta1 likes size equals: 1.
-
-respuestas := cuoora obtenerRespuestasOrdenadasDe: pregunta.
-self assert: respuestas first equals: respuesta2.
-
-respuesta1 agregarDislikeDe: usuario.
-self assert: respuesta1 likes size equals: 0.
-self assert: respuesta1 dislikes size equals: 1.
-
-respuesta2 agregarDislikeDe: usuario.
-respuesta2 agregarDislikeDe: usuario2.
-self assert: respuesta2 dislikes size equals: 2.
-
-respuestas := cuoora obtenerRespuestasOrdenadasDe: pregunta.
-self assert: respuestas first equals: respuesta1.
-
 
 ]

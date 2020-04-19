@@ -56,6 +56,16 @@ self assert: mati preguntas size equals: 0.
 ]
 
 { #category : #tests }
+UsuarioTest >> testCumploConNombrecontraseña [
+
+self assert: (mati cumploConNombre: 'mati' contraseña: '123').
+self assert: (agus cumploConNombre: 'agus' contraseña: '3456').
+self deny: (agus cumploConNombre: 'afgus' contraseña: '23232332').
+self deny: (agus cumploConNombre: 'agus' contraseña: '23232323').
+self deny: (mati cumploConNombre: 'mati' contraseña: '456').
+]
+
+{ #category : #tests }
 UsuarioTest >> testObtenerPreguntasDeSeguidos [
 
 
@@ -128,6 +138,17 @@ self assert: mati seguidos size equals: 0.
 mati seguirA: agus.
 
 self assert: mati seguidos size equals: 1. 
+]
+
+{ #category : #tests }
+UsuarioTest >> testSigoA [
+
+self assert: (mati seguidos size) equals: 0.
+self assert: (agus seguidos size) equals: 0.
+mati seguirA: agus.
+
+self assert: (mati seguidos anySatisfy:[:each| each = agus]).
+self deny: (agus seguidos anySatisfy:[:each | each = mati] ).
 ]
 
 { #category : #tests }

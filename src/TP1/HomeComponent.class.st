@@ -4,31 +4,11 @@ Class {
 	#category : #'TP1-ui'
 }
 
-{ #category : #'class initialization' }
-HomeComponent class >> initialize [ 
-
-
-
-]
-
 { #category : #hooks }
 HomeComponent >> children [ 
 
-^ (self model obtenerPreguntasRelevantesOrdenadasDe: (self session user)) collect: [:each | QuestionComponent post: each. ]
+^ (self model obtenerPreguntasRelevantesDe: (self session user)) collect: [:each | QuestionComponent post: each. ]
 
-]
-
-{ #category : #initialization }
-HomeComponent >> initialize [ 
-
-super initialize.
-
-]
-
-{ #category : #callbacks }
-HomeComponent >> question: aQuestion [
-
-self call: (QuestionComponent question: aQuestion).
 ]
 
 { #category : #rendering }

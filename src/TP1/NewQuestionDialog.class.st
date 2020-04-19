@@ -75,7 +75,7 @@ NewQuestionDialog >> topics: anObject [
 NewQuestionDialog >> validateAndSendQuestion [
 "La forma de hacer esto sin la variable temporal?"
 	| topicList |
-	self text isNotEmpty | self title isNotEmpty | self topics isNotEmpty
+	self text isNotEmpty & self title isNotEmpty & self topics isNotEmpty
 		ifFalse: [ ^ self ].
 		
 	topicList := self processTopics: self topics.
@@ -84,6 +84,7 @@ NewQuestionDialog >> validateAndSendQuestion [
 		agregarPreguntaConTitulo: self title
 		descripcion: self text
 		topicos: topicList.
-	
+		
+	self model agregarTopicos: topicList.
 	self answer.
 ]

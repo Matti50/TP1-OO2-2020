@@ -56,3 +56,26 @@ pregunta agregarLikeDe: agus.
 pregunta agregarLikeDe: mati.
 self assert: pregunta likes size equals: 2.
 ]
+
+{ #category : #tests }
+PostTest >> testDiferenciaDeLikes [
+
+|pregunta topicos|
+
+topicos := Set new.
+
+topicos add: (Topico newConNombre: 'El nuevo topico' descripcion: 'soy nuevo').
+
+pregunta := Pregunta newConUsuario: mati titulo: 'Otra pregunta' descripcion: 'es otra de las tantas preguntas' topicos: topicos.
+self assert: (pregunta diferenciaDeLikes) equals: 0.
+
+pregunta agregarLikeDe: agus.
+
+self assert: (pregunta diferenciaDeLikes) equals: 1. 
+
+pregunta agregarDislikeDe: mati.
+
+self assert: (pregunta diferenciaDeLikes) equals: 0.
+pregunta agregarDislikeDe: agus.
+self assert: (pregunta diferenciaDeLikes) equals: -2.
+]
