@@ -1,3 +1,6 @@
+"
+(WAAdmin register: self asApplicationAt: 'cuoora') sessionClass: CuooraSession.
+"
 Class {
 	#name : #LoginComponent,
 	#superclass : #HeaderComponent,
